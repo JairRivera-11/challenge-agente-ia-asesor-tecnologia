@@ -2,11 +2,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from app.services.llm import generate
+from app.services.search import buscar
 
-historial = [
-    {"role": "user", "content": "hola, busco una notebook"},
-    {"role": "assistant", "content": "¡Hola! ¿Para qué la vas a usar y qué presupuesto manejás?"},
-]
-
-print(generate("para programar, hasta 900 dolares", history=historial))
+print(buscar("precio RTX 5070 Argentina 2026"))
