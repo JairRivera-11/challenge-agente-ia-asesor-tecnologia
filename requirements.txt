@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+pydantic-settings
+python-dotenv
+google-genai
+tavily-python
+langgraph
