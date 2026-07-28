@@ -13,7 +13,7 @@
 <h1 class="marca">Electronicos.com</h1>
 <p class="bajada">Asistente de productos</p>
 </div>
-<button type="button" id="boton-panel" class="boton-panel" aria-expanded="false" aria-controls="panel">Ver flujo</button>
+<button type="button" id="boton-panel" class="boton-panel" aria-expanded="false" aria-controls="panel">Ver panel</button>
 </header>
 
 <div class="contenido">
@@ -82,6 +82,20 @@
 <dt>responder</dt>
 <dd>Redacta la recomendación con el historial y lo que se encontró.</dd>
 </dl>
+
+<h2 class="panel-titulo">Usar mis propias API keys</h2>
+
+<div class="claves">
+<label class="etiqueta-clave" for="clave-google">Google AI Studio</label>
+<input type="password" id="clave-google" class="campo-clave" placeholder="AIza..." autocomplete="off" spellcheck="false">
+
+<label class="etiqueta-clave" for="clave-tavily">Tavily</label>
+<input type="password" id="clave-tavily" class="campo-clave" placeholder="tvly-..." autocomplete="off" spellcheck="false">
+
+<button type="button" id="boton-borrar-claves" class="boton-borrar">Borrar</button>
+
+<p class="aviso-claves">Se envían solo en el mensaje que mandes y no quedan guardadas en el servidor ni en este navegador. Al recargar la página se pierden.</p>
+</div>
 
 </aside>
 

@@ -7,6 +7,9 @@ const formulario = document.getElementById("formulario");
 const campoTexto = document.getElementById("campo-texto");
 const botonEnviar = document.getElementById("boton-enviar");
 const botonPanel = document.getElementById("boton-panel");
+const claveGoogle = document.getElementById("clave-google");
+const claveTavily = document.getElementById("clave-tavily");
+const botonBorrarClaves = document.getElementById("boton-borrar-claves");
 
 let esperando = false;
 let filaEscribiendo = null;
@@ -77,7 +80,10 @@ function ajustarAltura() {
 }
 
 function obtenerClavesUsuario() {
-  return {};
+  return {
+    google: claveGoogle.value.trim(),
+    tavily: claveTavily.value.trim(),
+  };
 }
 
 function armarCabeceras() {
@@ -182,8 +188,14 @@ campoTexto.addEventListener("input", ajustarAltura);
 
 botonPanel.addEventListener("click", function () {
   const visible = document.body.classList.toggle("con-panel");
-  botonPanel.textContent = visible ? "Ver chat" : "Ver flujo";
+  botonPanel.textContent = visible ? "Ver chat" : "Ver panel";
   botonPanel.setAttribute("aria-expanded", visible);
+});
+
+botonBorrarClaves.addEventListener("click", function () {
+  claveGoogle.value = "";
+  claveTavily.value = "";
+  claveGoogle.focus();
 });
 
 campoTexto.focus();

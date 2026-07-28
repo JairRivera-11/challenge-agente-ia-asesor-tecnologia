@@ -301,6 +301,57 @@ body {
   color: var(--texto-suave);
 }
 
+.glosario + .panel-titulo {
+  margin-top: 28px;
+}
+
+.claves {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.etiqueta-clave {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.campo-clave {
+  width: 100%;
+  margin-bottom: 6px;
+  padding: 8px 10px;
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  background: var(--fondo);
+  color: inherit;
+  font: inherit;
+  font-size: 14px;
+}
+
+.campo-clave:focus {
+  outline: 2px solid var(--acento);
+  outline-offset: -1px;
+}
+
+.boton-borrar {
+  align-self: flex-start;
+  padding: 6px 12px;
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  background: var(--fondo);
+  color: var(--texto-suave);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.aviso-claves {
+  margin: 10px 0 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--texto-suave);
+}
+
 @media (min-width: 900px) {
   .boton-panel {
     display: none;
