@@ -8,7 +8,7 @@ class Settings(BaseSettings):
 
     google_api_key: str = ""
     tavily_api_key: str = ""
-    model_name: str = "gemini-2.5-flash"
+    model_name: str = "gemini-3.5-flash"
     allow_user_keys: bool = True
 
 
