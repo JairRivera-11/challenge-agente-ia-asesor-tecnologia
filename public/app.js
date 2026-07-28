@@ -6,6 +6,7 @@ const mensajes = document.getElementById("mensajes");
 const formulario = document.getElementById("formulario");
 const campoTexto = document.getElementById("campo-texto");
 const botonEnviar = document.getElementById("boton-enviar");
+const botonPanel = document.getElementById("boton-panel");
 
 let esperando = false;
 let filaEscribiendo = null;
@@ -178,5 +179,11 @@ campoTexto.addEventListener("keydown", function (evento) {
 });
 
 campoTexto.addEventListener("input", ajustarAltura);
+
+botonPanel.addEventListener("click", function () {
+  const visible = document.body.classList.toggle("con-panel");
+  botonPanel.textContent = visible ? "Ver chat" : "Ver flujo";
+  botonPanel.setAttribute("aria-expanded", visible);
+});
 
 campoTexto.focus();

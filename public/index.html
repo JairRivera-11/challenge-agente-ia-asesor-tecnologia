@@ -9,8 +9,11 @@
 <body>
 
 <header class="encabezado">
+<div class="titulo">
 <h1 class="marca">Electronicos.com</h1>
 <p class="bajada">Asistente de productos</p>
+</div>
+<button type="button" id="boton-panel" class="boton-panel" aria-expanded="false" aria-controls="panel">Ver flujo</button>
 </header>
 
 <div class="contenido">
@@ -29,6 +32,58 @@
 </form>
 
 </main>
+
+<aside class="panel" id="panel">
+
+<h2 class="panel-titulo">Cómo trabaja el asistente</h2>
+
+<svg class="diagrama" viewBox="0 0 280 348" role="img" aria-label="Diagrama del flujo: el mensaje pasa por clasificar, que decide si buscar en la web antes de responder">
+<defs>
+<marker id="punta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+<path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"></path>
+</marker>
+</defs>
+
+<g class="lineas">
+<path d="M140,40 V60"></path>
+<path class="linea-condicional" d="M140,104 V124 H60 V146"></path>
+<path class="linea-condicional" d="M140,104 V232"></path>
+<path d="M60,190 V212 H140 V232"></path>
+<path d="M140,276 V296"></path>
+</g>
+
+<g class="cajas">
+<rect class="caja-borde" x="70" y="8" width="140" height="32" rx="16"></rect>
+<rect class="caja-nodo" x="70" y="64" width="140" height="40" rx="8"></rect>
+<rect class="caja-nodo" x="5" y="150" width="110" height="40" rx="8"></rect>
+<rect class="caja-nodo" x="70" y="236" width="140" height="40" rx="8"></rect>
+<rect class="caja-borde" x="70" y="296" width="140" height="32" rx="16"></rect>
+</g>
+
+<g class="etiquetas">
+<text x="140" y="29">mensaje</text>
+<text x="140" y="89">clasificar</text>
+<text x="60" y="175">buscar</text>
+<text x="140" y="261">responder</text>
+<text x="140" y="317">respuesta</text>
+</g>
+
+<g class="ramas">
+<text x="72" y="139">sí</text>
+<text x="152" y="160">no</text>
+</g>
+</svg>
+
+<dl class="glosario">
+<dt>clasificar</dt>
+<dd>Decide si la consulta necesita datos actualizados y arma la búsqueda.</dd>
+<dt>buscar</dt>
+<dd>Consulta la web y recorta las fuentes más relevantes.</dd>
+<dt>responder</dt>
+<dd>Redacta la recomendación con el historial y lo que se encontró.</dd>
+</dl>
+
+</aside>
 
 </div>
 

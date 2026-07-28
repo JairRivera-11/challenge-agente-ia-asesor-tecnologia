@@ -9,6 +9,8 @@
   --error-fondo: #fdf1f1;
   --error-borde: #f0c9c9;
   --error-texto: #9b2c2c;
+  --nodo-fondo: #eef3fd;
+  --nodo-borde: #c3d5f5;
 }
 
 * {
@@ -34,6 +36,10 @@ body {
 
 .encabezado {
   flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   padding: 14px 20px;
   background: var(--superficie);
   border-bottom: 1px solid var(--borde);
@@ -50,6 +56,18 @@ body {
   margin: 2px 0 0;
   font-size: 13px;
   color: var(--texto-suave);
+}
+
+.boton-panel {
+  flex: none;
+  padding: 7px 14px;
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  background: var(--fondo);
+  color: var(--texto-suave);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
 }
 
 .contenido {
@@ -208,6 +226,104 @@ body {
 .boton-enviar:disabled {
   opacity: 0.55;
   cursor: not-allowed;
+}
+
+.panel {
+  display: none;
+  overflow-y: auto;
+  padding: 20px 18px calc(20px + env(safe-area-inset-bottom));
+  background: var(--superficie);
+  border-left: 1px solid var(--borde);
+}
+
+.panel-titulo {
+  margin: 0 0 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--texto-suave);
+}
+
+.diagrama {
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  margin: 0 auto;
+  color: var(--texto-suave);
+}
+
+.lineas path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  marker-end: url(#punta);
+}
+
+.linea-condicional {
+  stroke-dasharray: 4 3;
+}
+
+.caja-nodo {
+  fill: var(--nodo-fondo);
+  stroke: var(--nodo-borde);
+  stroke-width: 1;
+}
+
+.caja-borde {
+  fill: var(--fondo);
+  stroke: var(--borde);
+  stroke-width: 1;
+}
+
+.etiquetas text {
+  fill: var(--texto);
+  font-size: 13px;
+  text-anchor: middle;
+}
+
+.ramas text {
+  fill: var(--texto-suave);
+  font-size: 11px;
+  text-anchor: middle;
+}
+
+.glosario {
+  margin: 20px 0 0;
+  font-size: 13px;
+}
+
+.glosario dt {
+  margin-top: 12px;
+  font-weight: 600;
+}
+
+.glosario dd {
+  margin: 2px 0 0;
+  color: var(--texto-suave);
+}
+
+@media (min-width: 900px) {
+  .boton-panel {
+    display: none;
+  }
+
+  .contenido {
+    grid-template-columns: minmax(0, 1fr) 300px;
+  }
+
+  .panel {
+    display: block;
+  }
+}
+
+@media (max-width: 899px) {
+  .con-panel .chat {
+    display: none;
+  }
+
+  .con-panel .panel {
+    display: block;
+    border-left: none;
+  }
 }
 
 @media (max-width: 600px) {
