@@ -4,7 +4,6 @@ from google import genai
 from google.genai import types
 
 from app.config import get_settings
-from app.prompts import SYSTEM_PROMPT, WEB_CONTEXT_TEMPLATE
 from app.prompts import ROUTER_PROMPT, SYSTEM_PROMPT, WEB_CONTEXT_TEMPLATE
 
 
@@ -26,42 +25,53 @@ def _obtener_cliente(api_key):
     return _cliente_por_defecto()
 
 
-def _armar_contenidos(history, message):
-    contents = []
-    for item in history:
+def _armar_contenidos(historial, mensaje):
+    contenidos = []
+    for item in historial:
         role = "model" if item["role"] == "assistant" else "user"
-        contents.append(
+        contenidos.append(
             types.Content(role=role, parts=[types.Part.from_text(text=item["content"])])
         )
-    contents.append(
-        types.Content(role="user", parts=[types.Part.from_text(text=message)])
+    contenidos.append(
+        types.Content(role="user", parts=[types.Part.from_text(text=mensaje)])
     )
-    return contents
+    return contenidos
 
 
-def _armar_prompt_sistema(web_context):
-    if not web_context:
+def _armar_prompt_sistema(contexto_web):
+    if not contexto_web:
         return SYSTEM_PROMPT
-    return SYSTEM_PROMPT + "\n\n" + WEB_CONTEXT_TEMPLATE.format(context=web_context)
+    return SYSTEM_PROMPT + "\n\n" + WEB_CONTEXT_TEMPLATE.format(context=contexto_web)
 
 
-def generar(message, history=None, web_context=None, api_key=None):
+def _pedir_al_modelo(api_key, contenidos, prompt_sistema, temperatura):
     settings = get_settings()
     client = _obtener_cliente(api_key)
 
     try:
-        response = client.models.generate_content(
+        respuesta = client.models.generate_content(
             model=settings.model_name,
-            contents=_armar_contenidos(history or [], message),
+            contents=contenidos,
             config=types.GenerateContentConfig(
-                system_instruction=_armar_prompt_sistema(web_context),
-                temperature=0.4,
+                system_instruction=prompt_sistema,
+                temperature=temperatura,
             ),
         )
     except Exception as exc:
         raise LLMError("No se pudo generar la respuesta") from exc
 
-    if not response.text:
+    if not respuesta.text:
         raise LLMError("El modelo devolvió una respuesta vacía")
 
-    return response.text.strip()
+    return respuesta.text.strip()
+
+
+def generar(mensaje, historial=None, contexto_web=None, api_key=None):
+    contenidos = _armar_contenidos(historial or [], mensaje)
+    prompt_sistema = _armar_prompt_sistema(contexto_web)
+    return _pedir_al_modelo(api_key, contenidos, prompt_sistema, 0.4)
+
+
+def clasificar(mensaje, api_key=None):
+    contenidos = _armar_contenidos([], mensaje)
+    return _pedir_al_modelo(api_key, contenidos, ROUTER_PROMPT, 0)
