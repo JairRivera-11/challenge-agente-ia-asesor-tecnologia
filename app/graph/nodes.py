@@ -2,22 +2,20 @@ from app.services.llm import clasificar, generar
 from app.services.search import SearchError, buscar
 
 
-def _leer_decision(salida):
-    linea = (salida or "").strip().splitlines()[0] if salida else ""
-    partes = linea.split("|", 1)
-    encabezado = partes[0].strip().upper()
-
-    if encabezado not in ("SI", "SÍ") or len(partes) < 2:
-        return False, ""
-
-    return True, partes[1].strip()
-
-
 def clasificar_consulta(estado):
     salida = clasificar(estado["mensaje"], api_key=estado.get("google_api_key"))
-    necesita, consulta = _leer_decision(salida)
+    linea = salida.strip().split("\n")[0]
+    sin_busqueda = {"necesita_busqueda": False, "consulta_busqueda": ""}
 
-    return {"necesita_busqueda": necesita, "consulta_busqueda": consulta}
+    if "|" not in linea:
+        return sin_busqueda
+
+    encabezado, consulta = linea.split("|", 1)
+
+    if encabezado.strip().upper() not in ("SI", "SÍ"):
+        return sin_busqueda
+
+    return {"necesita_busqueda": True, "consulta_busqueda": consulta.strip()}
 
 
 def decidir_camino(estado):

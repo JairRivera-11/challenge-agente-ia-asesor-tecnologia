@@ -1,13 +1,10 @@
-from functools import lru_cache
-
 from langgraph.graph import END, START, StateGraph
 
 from app.graph.nodes import buscar_en_web, clasificar_consulta, decidir_camino, responder
 from app.graph.state import EstadoChat
 
 
-@lru_cache
-def obtener_grafo():
+def armar_grafo():
     constructor = StateGraph(EstadoChat)
 
     constructor.add_node("clasificar", clasificar_consulta)
@@ -24,3 +21,6 @@ def obtener_grafo():
     constructor.add_edge("responder", END)
 
     return constructor.compile()
+
+
+grafo = armar_grafo()

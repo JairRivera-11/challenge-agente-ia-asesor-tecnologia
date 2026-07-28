@@ -6,7 +6,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from app.config import get_settings
-from app.graph.builder import obtener_grafo
+from app.graph.builder import grafo
 from app.services.llm import LLMError
 from app.services.search import SearchError
 
@@ -61,7 +61,7 @@ def chat(peticion: PeticionChat, x_google_key=Header(None), x_tavily_key=Header(
     }
 
     try:
-        resultado = obtener_grafo().invoke(estado)
+        resultado = grafo.invoke(estado)
     except (LLMError, SearchError) as exc:
         raise HTTPException(status_code=502, detail="No se pudo generar la respuesta") from exc
 
