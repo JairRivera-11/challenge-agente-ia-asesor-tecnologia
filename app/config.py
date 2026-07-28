@@ -8,7 +8,8 @@ class Settings(BaseSettings):
 
     google_api_key: str = ""
     tavily_api_key: str = ""
-    model_name: str = "gemini-3.5-flash"
+    model_name: str = "gemini-3.1-flash-lite"
+    router_model_name: str = "gemini-flash-lite-latest"
     allow_user_keys: bool = True
 
 

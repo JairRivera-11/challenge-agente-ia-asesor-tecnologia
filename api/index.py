@@ -14,7 +14,6 @@ RAIZ = Path(__file__).resolve().parent.parent
 
 app = FastAPI(title="Asistente Electronicos.com")
 
-
 class MensajeHistorial(BaseModel):
     role: Literal["user", "assistant"]
     content: str = Field(min_length=1, max_length=4000)

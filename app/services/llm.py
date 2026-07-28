@@ -44,13 +44,12 @@ def _armar_prompt_sistema(contexto_web):
     return SYSTEM_PROMPT + "\n\n" + WEB_CONTEXT_TEMPLATE.format(context=contexto_web)
 
 
-def _pedir_al_modelo(api_key, contenidos, prompt_sistema, temperatura):
-    settings = get_settings()
+def _pedir_al_modelo(api_key, contenidos, prompt_sistema, temperatura, modelo):
     client = _obtener_cliente(api_key)
 
     try:
         respuesta = client.models.generate_content(
-            model=settings.model_name,
+            model=modelo,
             contents=contenidos,
             config=types.GenerateContentConfig(
                 system_instruction=prompt_sistema,
@@ -67,11 +66,13 @@ def _pedir_al_modelo(api_key, contenidos, prompt_sistema, temperatura):
 
 
 def generar(mensaje, historial=None, contexto_web=None, api_key=None):
+    settings = get_settings()
     contenidos = _armar_contenidos(historial or [], mensaje)
     prompt_sistema = _armar_prompt_sistema(contexto_web)
-    return _pedir_al_modelo(api_key, contenidos, prompt_sistema, 0.4)
+    return _pedir_al_modelo(api_key, contenidos, prompt_sistema, 0.4, settings.model_name)
 
 
 def clasificar(mensaje, api_key=None):
+    settings = get_settings()
     contenidos = _armar_contenidos([], mensaje)
-    return _pedir_al_modelo(api_key, contenidos, ROUTER_PROMPT, 0)
+    return _pedir_al_modelo(api_key, contenidos, ROUTER_PROMPT, 0, settings.router_model_name)
