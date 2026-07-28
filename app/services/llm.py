@@ -5,6 +5,7 @@ from google.genai import types
 
 from app.config import get_settings
 from app.prompts import SYSTEM_PROMPT, WEB_CONTEXT_TEMPLATE
+from app.prompts import ROUTER_PROMPT, SYSTEM_PROMPT, WEB_CONTEXT_TEMPLATE
 
 
 class LLMError(Exception):
@@ -12,20 +13,20 @@ class LLMError(Exception):
 
 
 @lru_cache
-def _default_client():
+def _cliente_por_defecto():
     settings = get_settings()
     if not settings.google_api_key:
         raise LLMError("Falta configurar GOOGLE_API_KEY")
     return genai.Client(api_key=settings.google_api_key)
 
 
-def _get_client(api_key):
+def _obtener_cliente(api_key):
     if api_key:
         return genai.Client(api_key=api_key)
-    return _default_client()
+    return _cliente_por_defecto()
 
 
-def _build_contents(history, message):
+def _armar_contenidos(history, message):
     contents = []
     for item in history:
         role = "model" if item["role"] == "assistant" else "user"
@@ -38,22 +39,22 @@ def _build_contents(history, message):
     return contents
 
 
-def _build_system_prompt(web_context):
+def _armar_prompt_sistema(web_context):
     if not web_context:
         return SYSTEM_PROMPT
     return SYSTEM_PROMPT + "\n\n" + WEB_CONTEXT_TEMPLATE.format(context=web_context)
 
 
-def generate(message, history=None, web_context=None, api_key=None):
+def generar(message, history=None, web_context=None, api_key=None):
     settings = get_settings()
-    client = _get_client(api_key)
+    client = _obtener_cliente(api_key)
 
     try:
         response = client.models.generate_content(
             model=settings.model_name,
-            contents=_build_contents(history or [], message),
+            contents=_armar_contenidos(history or [], message),
             config=types.GenerateContentConfig(
-                system_instruction=_build_system_prompt(web_context),
+                system_instruction=_armar_prompt_sistema(web_context),
                 temperature=0.4,
             ),
         )

@@ -14,17 +14,17 @@ MAX_CHARS_POR_RESULTADO = 800
 
 
 @lru_cache
-def _default_client():
+def _cliente_por_defecto():
     settings = get_settings()
     if not settings.tavily_api_key:
         raise SearchError("Falta configurar TAVILY_API_KEY")
     return TavilyClient(api_key=settings.tavily_api_key)
 
 
-def _get_client(api_key):
+def _obtener_cliente(api_key):
     if api_key:
         return TavilyClient(api_key=api_key)
-    return _default_client()
+    return _cliente_por_defecto()
 
 
 def _formatear(resultados):
@@ -42,7 +42,7 @@ def _formatear(resultados):
 
 
 def buscar(query, api_key=None):
-    client = _get_client(api_key)
+    client = _obtener_cliente(api_key)
 
     try:
         response = client.search(
